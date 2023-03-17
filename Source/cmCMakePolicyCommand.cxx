@@ -38,7 +38,7 @@ bool cmCMakePolicyCommand
       this->SetError("PUSH may not be given additional arguments.");
       return false;
       }
-    this->Makefile->PushPolicy();
+    this->Makefile->PushPolicy(false, cmPolicies::PolicyMap());
     return true;
     }
   else if(args[0] == "POP")

@@ -69,7 +69,7 @@ cmMakefile::cmMakefile(cmGlobalGenerator* globalGenerator,
       ->CreatePolicyScopeSnapshot(this->StateSnapshot);
 
   // Enter a policy level for this directory.
-  this->PushPolicy();
+  this->PushPolicy(false, cmPolicies::PolicyMap());
 
   // push empty loop block
   this->PushLoopBlockBarrier();
@@ -348,7 +348,7 @@ cmMakefile::IncludeScope::IncludeScope(cmMakefile* mf,
         // any policies that would affect the includer and therefore
         // requires a warning.  We use a weak scope to simulate OLD
         // behavior by allowing policy changes to affect the includer.
-        this->Makefile->PushPolicy(true);
+        this->Makefile->PushPolicy(true, cmPolicies::PolicyMap());
         this->CheckCMP0011 = true;
         break;
       case cmPolicies::OLD:
@@ -362,7 +362,7 @@ cmMakefile::IncludeScope::IncludeScope(cmMakefile* mf,
         this->CheckCMP0011 = true;
       case cmPolicies::NEW:
         // NEW behavior is to push a (strong) scope.
-        this->Makefile->PushPolicy();
+        this->Makefile->PushPolicy(false, cmPolicies::PolicyMap());
         break;
       }
     }
@@ -4541,7 +4541,7 @@ bool cmMakefile::SetPolicy(cmPolicies::PolicyID id,
 //----------------------------------------------------------------------------
 cmMakefile::PolicyPushPop::PolicyPushPop(cmMakefile* m): Makefile(m)
 {
-  this->Makefile->PushPolicy();
+  this->Makefile->PushPolicy(false, cmPolicies::PolicyMap());
 }
 
 //----------------------------------------------------------------------------

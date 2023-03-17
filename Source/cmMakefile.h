@@ -872,8 +872,8 @@ private:
   TargetMap ImportedTargets;
 
   // Internal policy stack management.
-  void PushPolicy(bool weak = false,
-                  cmPolicies::PolicyMap const& pm = cmPolicies::PolicyMap());
+  void PushPolicy(bool weak,
+                  const cmPolicies::PolicyMap& pm);
   void PopPolicy();
   void PopSnapshot(bool reportError = true);
   friend class cmCMakePolicyCommand;
